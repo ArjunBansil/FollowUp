@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#d32f2f</color>
+    <color name="colorPrimary">#ef5350</color>
+    <color name="colorAccent">#ef9a9a</color>
+    <color name="drawer_item_text">#fff</color>
+    <color name="ternary">#ff3b3b3a</color>
+
+    <color name="drawer_header_bg">@color/colorPrimaryDark</color>
+    <color name="drawer_item_text_default">#bebebe</color>
+    <color name="drawer_item_text_checked">@color/colorPrimary</color>
+
+</resources>
