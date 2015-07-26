@@ -69,47 +69,6 @@ public class fragment_two extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         Toast.makeText(getActivity().getApplicationContext(), "HEy, was gud", Toast.LENGTH_SHORT).show();
-        Snackbar.make(view.findViewById(R.id.content), "Login Achieved", Snackbar.LENGTH_SHORT)
-                .setActionTextColor(Color.RED)
-                .show();
-
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        GraphRequest request = GraphRequest.newMeRequest(
-                accessToken,
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
-        request.setParameters(parameters);
-
-        request.setCallback(new GraphRequest.Callback() {
-            @Override
-            public void onCompleted(GraphResponse graphResponse) {
-                object = graphResponse.getJSONObject();
-            }
-        });
-        request.executeAsync();
-
-        String link = "NOTHING HAPPENED AT ALL HOLMES";
-        try{
-            if(!object.equals(null)){
-                link = object.optString("name");
-                Log.e("tag", "It happened man");
-
-            }else{
-                Log.i("tag", "Object is still null fam");
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        Toast.makeText(getActivity().getApplicationContext(), link, Toast.LENGTH_SHORT).show();
-        demo(link);
 
     }
 
