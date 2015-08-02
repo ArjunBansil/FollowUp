@@ -42,6 +42,7 @@ public class fragment_two extends Fragment {
             Profile profile = Profile.getCurrentProfile();
             if(profile!=null){
                 Media_Container m = new Media_Container("Facebook", profile.getLinkUri().toString());
+                db.cleanUp("Facebook");
                 db.addMedia(m);
             }
         }
@@ -75,6 +76,7 @@ public class fragment_two extends Fragment {
             @Override
             public void onClick(View v) {
                 Media_Container m = new Media_Container("Phone", phoneNum.getText().toString());
+                db.cleanUp("Phone");
                 db.addMedia(m);
             }
         });
@@ -87,6 +89,7 @@ public class fragment_two extends Fragment {
                 String id = session.getUserName();
                 String url = "http://twitter.com/" +id;
                 Media_Container m = new Media_Container("Twitter", url);
+                db.cleanUp("Twitter");
                 db.addMedia(m);
             }
 

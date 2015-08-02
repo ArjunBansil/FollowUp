@@ -86,6 +86,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return mediaList;
     }
 
+    public void cleanUp(String type){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(table_name, key_type +" = ?", new String[]{type});
+        db.close();
+    }
+
     public int updateMedia(Media_Container m){
         SQLiteDatabase db = this.getWritableDatabase();
 
