@@ -2,76 +2,109 @@ package com.kingkrooks.followup;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONObject;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import objects.DatabaseHandler;
+import objects.Media_Container;
 
 
 public class fragment_two extends Fragment {
 
-    private TextView info;
-    private LoginButton loginButton;
     private CallbackManager callbackManager;
-    private Button b;
-    public JSONObject object = null;
     public View view;
+    private TwitterLoginButton twitterLoginButton;
+    public DatabaseHandler db;
+    private EditText phoneNum;
+    private Button b;
 
-    public fragment_two newInstance(){
-        return new fragment_two();
-    }
+    private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Profile profile = Profile.getCurrentProfile();
+            if(profile!=null){
+                Media_Container m = new Media_Container("Facebook", profile.getLinkUri().toString());
+                db.addMedia(m);
+            }
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_fragment_two, container, false);
 
-        info = (TextView)view.findViewById(R.id.info);
-        loginButton = (LoginButton)view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_birthday");
+        twitterLoginButton = (TwitterLoginButton)view.findViewById(R.id.twitter_login);
+        LoginButton loginButton = (LoginButton)view.findViewById(R.id.login_button);
+        callbackManager = CallbackManager.Factory.create();
+        loginButton.registerCallback(callbackManager, mCallBack);
+        db = new DatabaseHandler(getActivity().getApplicationContext());
+        b = (Button)view.findViewById(R.id.addPhone);
+        phoneNum = (EditText)view.findViewById(R.id.textDialog);
 
-        b = (Button)view.findViewById(R.id.logout);
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logOut();
+                Media_Container m = new Media_Container("Phone", phoneNum.getText().toString());
+                db.addMedia(m);
             }
         });
-        callbackManager = CallbackManager.Factory.create();
 
 
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                TwitterSession session = Twitter.getSessionManager().getActiveSession();
+                String id = session.getUserName();
+                String url = "http://twitter.com/" +id;
+                Media_Container m = new Media_Container("Twitter", url);
+                db.addMedia(m);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+
+            }
+        });
 
         return view;
     }
 
-    public void demo(String txt){
-        info.setText(txt);
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        Toast.makeText(getActivity().getApplicationContext(), "HEy, was gud", Toast.LENGTH_SHORT).show();
-
+        Snackbar.make(view, "Login Successful", Snackbar.LENGTH_SHORT)
+                .show();
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
 }
