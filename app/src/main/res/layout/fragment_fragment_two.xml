@@ -16,24 +16,37 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp" />
 
-        <TextView
-            android:layout_width="200dp"
+        <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/twitter_login"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/not_there"
-            android:id="@+id/info"
             android:layout_below="@+id/login_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="31dp" />
+            android:layout_marginTop="69dp" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/twitter_login"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="61dp">
+            <EditText
+                android:id="@+id/textDialog"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phone"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log Out"
-            android:id="@+id/logout"
-            android:layout_below="@+id/info"
+            android:text="@string/addPhone"
+            android:id="@+id/addPhone"
+            android:layout_below="@+id/til"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="98dp" />
+            android:layout_marginTop="51dp" />
 
     </RelativeLayout>
 

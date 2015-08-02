@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimaryDark">#d32f2f</color>
     <color name="colorPrimary">#ef5350</color>
-    <color name="colorAccent">#ef9a9a</color>
+    <color name="colorAccent">@color/colorPrimary</color>
     <color name="drawer_item_text">#fff</color>
     <color name="ternary">#ff3b3b3a</color>
 

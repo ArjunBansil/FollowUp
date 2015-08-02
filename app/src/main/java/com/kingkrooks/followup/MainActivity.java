@@ -23,12 +23,16 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
+
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
     private static final String NAV_ITEM_ID = "navItemId";
@@ -43,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getResources().getString(R.string.twitter_key),
+                getResources().getString(R.string.twitter_secret));
+
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -51,21 +59,17 @@ public class MainActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // load saved navigation state if present
         if (null == savedInstanceState) {
             mNavItemId = R.id.drawer_item_1;
         } else {
             mNavItemId = savedInstanceState.getInt(NAV_ITEM_ID);
         }
 
-        // listen for navigation events
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // select the correct nav menu item
         navigationView.getMenu().findItem(mNavItemId).setChecked(true);
 
-        // set up the hamburger icon to open and close the drawer
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,
                 R.string.close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -97,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(final MenuItem menuItem) {
-        // update highlighted item in the navigation menu
         menuItem.setChecked(true);
         mNavItemId = menuItem.getItemId();
 
@@ -143,11 +146,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Snackbar.make(findViewById(R.id.content), "Button worked", Snackbar.LENGTH_SHORT)
-                .setActionTextColor(Color.RED)
-                .show();
         sec_frag.onActivityResult(requestCode, resultCode, data);
-
+        firstFrag.onActivityResult(requestCode, resultCode, data);
 
     }
 
