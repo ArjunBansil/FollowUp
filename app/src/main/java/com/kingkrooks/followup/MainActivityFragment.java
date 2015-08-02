@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -31,6 +33,7 @@ public class MainActivityFragment extends Fragment {
     private View view;
     private ImageView img;
     private FloatingActionButton fab;
+    private TextView txt;
 
     @Nullable
     @Override
@@ -41,6 +44,7 @@ public class MainActivityFragment extends Fragment {
         db = new DatabaseHandler(getActivity().getApplicationContext());
         img= (ImageView)view.findViewById(R.id.imageView);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        txt = (TextView)view.findViewById(R.id.textView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,8 +82,8 @@ public class MainActivityFragment extends Fragment {
             }
             try{
                 generateQRCode(data);
-                Snackbar.make(view, "QR Code Generated", Snackbar.LENGTH_SHORT)
-                        .show();
+                txt.setText(getResources().getString(R.string.explanation));
+
             }catch (WriterException e){
                 e.printStackTrace();
             }
