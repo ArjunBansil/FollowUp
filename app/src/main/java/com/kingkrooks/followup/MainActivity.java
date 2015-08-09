@@ -2,10 +2,8 @@ package com.kingkrooks.followup;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,20 +12,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -43,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements
     private int mNavItemId;
     private MainActivityFragment firstFrag = new MainActivityFragment();
     private fragment_two sec_frag = new fragment_two();
+    private ResultFragment result_frag = new ResultFragment();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -97,6 +86,18 @@ public class MainActivity extends AppCompatActivity implements
                 break;
 
         }
+    }
+
+    public void useResult(String r){
+        Log.i("tag", "Info made it alive");
+        result_frag.setContent(r);
+        Log.i("tag", "Information set");
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, result_frag)
+                .addToBackStack(null)
+                .commit();
+
     }
 
     @Override
