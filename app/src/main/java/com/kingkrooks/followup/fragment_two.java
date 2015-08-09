@@ -87,8 +87,8 @@ public class fragment_two extends Fragment {
             public void success(Result<TwitterSession> result) {
                 TwitterSession session = Twitter.getSessionManager().getActiveSession();
                 String id = session.getUserName();
-                String url = "http://twitter.com/" +id;
-                Media_Container m = new Media_Container("Twitter", url);
+                String url = "@";
+                Media_Container m = new Media_Container("Twitter", url + id);
                 db.cleanUp("Twitter");
                 db.addMedia(m);
             }

@@ -6,6 +6,9 @@
     <color name="drawer_item_text">#fff</color>
     <color name="ternary">#ff3b3b3a</color>
 
+    <color name="facebook">#3b5998</color>
+    <color name="twitter">#4099ff</color>
+
     <color name="drawer_header_bg">@color/colorPrimaryDark</color>
     <color name="drawer_item_text_default">#bebebe</color>
     <color name="drawer_item_text_checked">@color/colorPrimary</color>

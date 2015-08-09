@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -115,10 +117,18 @@ public class MainActivityFragment extends Fragment {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        Snackbar.make(view, "Hello, it kinda worked", Snackbar.LENGTH_SHORT)
-                .show();
-
-
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Log.i("tag", "Result received");
+        if(result!=null){
+            if(result.getContents() == null){
+                Snackbar.make(view, "No result captured", Snackbar.LENGTH_SHORT)
+                        .show();
+            }else{
+                MainActivity activity = (MainActivity)getActivity();
+                Log.i("tag", "Sending result over, holmes");
+                activity.useResult(result.getContents());
+            }
+        }
 
     }
 }

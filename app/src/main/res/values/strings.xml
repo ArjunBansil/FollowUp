@@ -13,6 +13,8 @@
     <string name="facebook_app_id">403617969834770</string>
     <string name="twitter_key">CYMF65XloD8whRkxPSVgVh5E3</string>
     <string name="twitter_secret">DAjICezEIe7fXTqjBUm1lI65DYumA56zlha9Cp9gkhlN3iQiVG</string>
+    <string name="sample">"#Title"</string>
+    <string name="sample2">#FollowUp</string>
 
 
 </resources>
