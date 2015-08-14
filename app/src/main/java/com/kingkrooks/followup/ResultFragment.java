@@ -50,6 +50,8 @@ public class ResultFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_result, container, false);
 
 
+        getActivity().setTitle(getResources().getString(R.string.results));
+
         RecyclerView recList = (RecyclerView)view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
