@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">FollowUp</string>
+    <string name="app_name">Connext</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="main_title">Main</string>
+    <string name="add_info">Log-In Page</string>
+    <string name="results">Results</string>
     <string name="item_1">QR Code</string>
     <string name="item_2">Sign in with Your Networks</string>
     <string name="open">Open Navigation Drawer</string>
@@ -9,6 +12,7 @@
     <string name="explanation">This is the QR Code that Other People Need to Scan</string>
     <string name="not_there">No account information, so there is no QR Code yet</string>
     <string name="phone">Phone Number</string>
+    <string name="email">Email Address</string>
     <string name="addPhone">Add Phone Number</string>
     <string name="facebook_app_id">403617969834770</string>
     <string name="twitter_key">CYMF65XloD8whRkxPSVgVh5E3</string>

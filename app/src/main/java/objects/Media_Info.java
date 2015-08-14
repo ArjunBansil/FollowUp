@@ -17,14 +17,18 @@ public class Media_Info {
     private String finalUrl;
     private int color_header;
     private Intent action;
+    private EmailValidator emailValidator;
 
     private static final String phone= "Phone Number";
     private static final String twitter = "Twitter";
     private static final String facebook = "Facebook";
+    private static final String email = "Email";
 
     public Media_Info(String u, Context c){
         this.url = u;
         this.p = c;
+
+        this.emailValidator = new EmailValidator();
         generateType();
         generateClick();
         setHeader();
@@ -40,12 +44,15 @@ public class Media_Info {
     }
 
     private void generateType(){
-        if(url.contains("@")){
+        if(url.contains("@") && !emailValidator.validate(url)){
             this.type = twitter;
             url = url.replace("@","");
             finalUrl = "http://twitter.com/" + url;
         }else if(url.contains("facebook")){
             this.type = facebook;
+            finalUrl = url;
+        }else if(emailValidator.validate(url)){
+            this.type = email;
             finalUrl = url;
         }else{
             this.type = phone;
@@ -72,6 +79,8 @@ public class Media_Info {
             this.color_header = p.getResources().getColor(R.color.facebook);
         }else if(this.type.equals("Twitter")){
             this.color_header = p.getResources().getColor(R.color.twitter);
+        }else if(this.type.equals("Email")){
+            this.color_header = p.getResources().getColor(R.color.email);
         }else{
             this.color_header = p.getResources().getColor(R.color.colorPrimary);
         }

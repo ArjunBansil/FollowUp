@@ -1,7 +1,10 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/signInMain"
-    android:layout_height="match_parent" tools:context="com.kingkrooks.followup.fragment_two">
+    android:layout_height="match_parent"
+    tools:context="com.kingkrooks.followup.fragment_two">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -27,26 +30,66 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til"
-            android:layout_width="500dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="57dp"
             android:layout_below="@+id/twitter_login"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="61dp">
+            android:layout_centerHorizontal="true">
             <EditText
                 android:id="@+id/textDialog"
-                android:layout_width="fill_parent"
+                android:layout_width="225dp"
+                android:inputType="number"
                 android:layout_height="wrap_content"
                 android:hint="@string/phone"/>
         </android.support.design.widget.TextInputLayout>
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/addPhone"
-            android:id="@+id/addPhone"
+            android:src="@mipmap/ic_done"
+            android:layout_gravity="bottom|end"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:clickable="true"
+            android:layout_alignTop="@+id/til"
+            android:layout_toEndOf="@+id/login_button"
+            android:layout_marginTop="10dp" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/emailCarrier"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_below="@+id/til"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="51dp" />
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailEntry"
+                android:hint="@string/email"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addEmail"
+            app:elevation="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_email"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            android:layout_below="@+id/addPhone"
+            android:layout_alignTop="@+id/emailCarrier"
+            android:layout_toEndOf="@+id/login_button"
+            android:layout_marginTop="10dp"
+
+
+
+            />
+
 
     </RelativeLayout>
 

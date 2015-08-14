@@ -1,5 +1,6 @@
 package com.kingkrooks.followup;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,12 +10,14 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -53,6 +56,8 @@ public class MainActivityFragment extends Fragment {
                 doThingss();
             }
         });
+
+        getActivity().setTitle(getResources().getString(R.string.main_title));
 
         Cursor cursor = db.getReadableDatabase()
                 .rawQuery("SELECT * FROM " + "Social_Media", null);

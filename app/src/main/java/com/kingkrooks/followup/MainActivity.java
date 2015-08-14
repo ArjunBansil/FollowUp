@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
     private static final String NAV_ITEM_ID = "navItemId";
+    private android.support.v7.widget.Toolbar toolbar;
 
     private final Handler mDrawerActionHandler = new Handler();
     private DrawerLayout mDrawerLayout;
@@ -45,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         if (null == savedInstanceState) {
             mNavItemId = R.id.drawer_item_1;
@@ -150,6 +153,10 @@ public class MainActivity extends AppCompatActivity implements
         sec_frag.onActivityResult(requestCode, resultCode, data);
         firstFrag.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public void setTitle(String title){
+        toolbar.setTitle(title);
     }
 
 

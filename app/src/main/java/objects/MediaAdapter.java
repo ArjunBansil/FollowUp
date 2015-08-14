@@ -49,7 +49,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
 
         if(m.returnType().equals("Phone Number")){
             a = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+m.getUrl()));
-        }else{
+        }else if(m.returnType().equals("Email")){
+            a = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", m.getUrl(), null));
+            a.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            a.putExtra(Intent.EXTRA_TEXT, "Body");
+        }
+        else{
             a = new Intent(Intent.ACTION_VIEW, Uri.parse(m.getUrl()));
         }
         a.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
