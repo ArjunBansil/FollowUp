@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -106,6 +107,9 @@ public class ResultFragment extends Fragment {
                     }
 
                 }
+
+                Snackbar.make(view, "File Saved", Snackbar.LENGTH_SHORT)
+                        .show();
             }
         });
 

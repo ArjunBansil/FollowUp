@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ import objects.ContactAdapter;
 public class Contacts extends Fragment {
 
     private View view;
+    private TextView txt;
 
     public static Contacts newInstance() {
         Contacts fragment = new Contacts();
@@ -51,8 +53,15 @@ public class Contacts extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        ContactAdapter ca = new ContactAdapter(getList());
-        recList.setAdapter(ca);
+        if(getList().isEmpty()){
+            txt = (TextView)view.findViewById(R.id.empty);
+            txt.setVisibility(View.VISIBLE);
+            txt.setText("No Contact Info Saved! Start Scanning!");
+        }else{
+            ContactAdapter ca = new ContactAdapter(getList());
+            recList.setAdapter(ca);
+        }
+
 
 
 
