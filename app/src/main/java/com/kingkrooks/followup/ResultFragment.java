@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,11 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +37,7 @@ public class ResultFragment extends Fragment {
 
     private String result = "No result yet hamie";
     private View view;
+    private FloatingActionButton fab;
 
 
     public ResultFragment() {
@@ -51,6 +61,63 @@ public class ResultFragment extends Fragment {
 
 
         getActivity().setTitle(getResources().getString(R.string.results));
+        fab = (FloatingActionButton)view.findViewById(R.id.saveButton);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Connext");
+                directory.mkdirs();
+                File file = new File(directory, "contacts.txt");
+                if(!file.exists()){
+                    Log.i("tag", "File is being created, holmes");
+                    try{
+                        Toast.makeText(getActivity().getApplicationContext(), "File written", Toast.LENGTH_SHORT)
+                                .show();
+                        ArrayList<String> list = new ArrayList<String>();
+                        list.add(result);
+                        FileOutputStream fos = new FileOutputStream(file);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(list);
+                        oos.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else{
+                    Log.i("tag", "File has been created, reading the results");
+                    try{
+                        FileInputStream fis = new FileInputStream(file);
+                        ObjectInputStream ois = new ObjectInputStream(fis);
+                        ArrayList<String> list = (ArrayList<String>)ois.readObject();
+                        list.add(result);
+                        ois.close();
+
+
+
+                        FileOutputStream fos = new FileOutputStream(file);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(list);
+                        oos.close();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Save Contact for Later", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            }
+        });
+
 
         RecyclerView recList = (RecyclerView)view.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -65,6 +132,8 @@ public class ResultFragment extends Fragment {
         Log.i("tag", "Adapter is set, holmes");
         recList.setAdapter(ma);
         Log.i("tag", "RecList has set the adapter");
+
+
 
 
         return view;

@@ -7,10 +7,12 @@
     <string name="results">Results</string>
     <string name="item_1">QR Code</string>
     <string name="item_2">Sign in with Your Networks</string>
+    <string name="item_3">Saved Contacts</string>
     <string name="open">Open Navigation Drawer</string>
     <string name="close">Close Navigation Drawer</string>
     <string name="explanation">This is the QR Code that Other People Need to Scan</string>
-    <string name="not_there">No account information, so there is no QR Code yet</string>
+    <string name="not_there">Navigate to the Sign-In Page to Generate QR Code</string>
+    <string name="expo">You can save contact information to use it later by clicking the save button on the bottom right corner once you've scanned it and use the Saved Contacts page to use it</string>
     <string name="phone">Phone Number</string>
     <string name="email">Email Address</string>
     <string name="addPhone">Add Phone Number</string>
@@ -19,6 +21,10 @@
     <string name="twitter_secret">DAjICezEIe7fXTqjBUm1lI65DYumA56zlha9Cp9gkhlN3iQiVG</string>
     <string name="sample">"#Title"</string>
     <string name="sample2">#FollowUp</string>
+    <string name="name">Name</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

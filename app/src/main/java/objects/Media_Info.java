@@ -27,7 +27,6 @@ public class Media_Info {
     public Media_Info(String u, Context c){
         this.url = u;
         this.p = c;
-
         this.emailValidator = new EmailValidator();
         generateType();
         generateClick();
@@ -54,6 +53,12 @@ public class Media_Info {
         }else if(emailValidator.validate(url)){
             this.type = email;
             finalUrl = url;
+
+        }else if(url.contains("(Name)")){
+            this.type = "Name";
+            finalUrl = url.replace("(Name)", "");
+            finalUrl = finalUrl.replace(","," ");
+            finalUrl = finalUrl.replace("|", "");
         }else{
             this.type = phone;
             finalUrl = url;

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -39,6 +40,7 @@ public class MainActivityFragment extends Fragment {
     private ImageView img;
     private FloatingActionButton fab;
     private TextView txt;
+    private static final int PIX_HEIGHT_WIDTH = 350;
 
     @Nullable
     @Override
@@ -70,6 +72,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         if(row){
+            img.setVisibility(View.VISIBLE);
             List<Media_Container> mList = db.getAllMedia();
             List<Media_Container> fList = new ArrayList<Media_Container>();
 
@@ -95,6 +98,10 @@ public class MainActivityFragment extends Fragment {
                 e.printStackTrace();
             }
 
+        }else{
+            img.setVisibility(View.INVISIBLE);
+
+
         }
 
 
@@ -109,11 +116,11 @@ public class MainActivityFragment extends Fragment {
     private void generateQRCode(String data) throws WriterException {
         com.google.zxing.Writer writer = new QRCodeWriter();
 
-        BitMatrix bm = writer.encode(data, BarcodeFormat.QR_CODE, 150, 150);
-        Bitmap ImageBitmap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888);
+        BitMatrix bm = writer.encode(data, BarcodeFormat.QR_CODE, PIX_HEIGHT_WIDTH, PIX_HEIGHT_WIDTH);
+        Bitmap ImageBitmap = Bitmap.createBitmap(PIX_HEIGHT_WIDTH, PIX_HEIGHT_WIDTH, Bitmap.Config.ARGB_8888);
 
-        for (int i = 0; i < 150; i++) {
-            for (int j = 0; j < 150; j++) {
+        for (int i = 0; i < PIX_HEIGHT_WIDTH; i++) {
+            for (int j = 0; j < PIX_HEIGHT_WIDTH; j++) {
                 ImageBitmap.setPixel(i, j, bm.get(i, j) ? Color.BLACK: Color.WHITE);
             }
         }

@@ -14,11 +14,12 @@
 
 
         <ImageView
-            android:layout_width="400dp"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
             android:src="@mipmap/no_qr"/>
 
         <TextView
@@ -32,8 +33,6 @@
             android:layout_marginTop="26dp" />
 
 
-
-
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -44,7 +43,7 @@
         android:src="@drawable/ic_pic"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
-        android:layout_gravity="bottom|right|end"
+        android:layout_gravity="bottom|end"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:layout_alignParentBottom="true"
