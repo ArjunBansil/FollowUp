@@ -42,8 +42,8 @@ public class fragment_two extends Fragment {
     private TwitterLoginButton twitterLoginButton;
     private LoginButton loginButton;
     public DatabaseHandler db;
-    private EditText phoneNum, emailAddress;
-    private FloatingActionButton b, b2;
+    private EditText phoneNum, emailAddress, nameAdder;
+    private FloatingActionButton b, b2, b3;
 
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
@@ -78,8 +78,6 @@ public class fragment_two extends Fragment {
         getActivity().setTitle(getResources().getString(R.string.add_info));
 
 
-
-
         twitterLoginButton = (TwitterLoginButton)view.findViewById(R.id.twitter_login);
         loginButton = (LoginButton)view.findViewById(R.id.login_button);
         callbackManager = CallbackManager.Factory.create();
@@ -87,6 +85,8 @@ public class fragment_two extends Fragment {
         db = new DatabaseHandler(getActivity().getApplicationContext());
         b = (FloatingActionButton)view.findViewById(R.id.addPhone);
         b2 = (FloatingActionButton)view.findViewById(R.id.addEmail);
+        b3 = (FloatingActionButton)view.findViewById(R.id.addName);
+        nameAdder = (EditText)view.findViewById(R.id.nameEntry);
         phoneNum = (EditText)view.findViewById(R.id.textDialog);
         emailAddress = (EditText)view.findViewById(R.id.emailEntry);
 
@@ -104,6 +104,15 @@ public class fragment_two extends Fragment {
             }
         });
 
+        b.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Add Phone Number", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            }
+        });
+
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,8 +121,44 @@ public class fragment_two extends Fragment {
                 db.addMedia(m);
                 Snackbar.make(view, "Primary Email Account Added", Snackbar.LENGTH_SHORT)
                         .show();
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
+
+        b2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Add Email Address", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            }
+        });
+
+
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameAdder.getText().toString();
+                name = name.replace(" ", ",");
+                String fin = "(Name)" + name + "|";
+                Log.i("tag", fin);
+                Media_Container m = new Media_Container("Name", fin);
+                db.cleanUp("Name");
+                db.addMedia(m);
+                Snackbar.make(view, "Name Added", Snackbar.LENGTH_SHORT)
+                        .show();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
+
+        b3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Add Name", Toast.LENGTH_SHORT)
+                        .show();
+                return true;
             }
         });
 

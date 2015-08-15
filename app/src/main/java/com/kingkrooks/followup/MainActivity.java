@@ -1,5 +1,6 @@
 package com.kingkrooks.followup;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
@@ -21,6 +22,8 @@ import io.fabric.sdk.android.Fabric;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
+    private boolean contactAlive = false;
+
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
     private static final String NAV_ITEM_ID = "navItemId";
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     private MainActivityFragment firstFrag = new MainActivityFragment();
     private fragment_two sec_frag = new fragment_two();
     private ResultFragment result_frag = new ResultFragment();
+    private Contacts c_frag = new Contacts();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -73,18 +77,29 @@ public class MainActivity extends AppCompatActivity implements
     private void navigate(final int itemId) {
         switch (itemId){
             case R.id.drawer_item_1:
+                contactAlive = false;
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content, firstFrag)
+                        .replace(R.id.content, firstFrag, "home")
+                        .addToBackStack(null)
                         .commit();
                 break;
             case R.id.drawer_item_2:
+                contactAlive = false;
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content, sec_frag)
+                        .replace(R.id.content, sec_frag, "info")
+                        .addToBackStack(null)
                         .commit();
                 break;
-
+            case R.id.drawer_item_3:
+                contactAlive = true;
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, c_frag, "contact")
+                        .addToBackStack(null)
+                        .commit();
+                break;
             default:
                 break;
 
@@ -97,9 +112,10 @@ public class MainActivity extends AppCompatActivity implements
         Log.i("tag", "Information set");
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, result_frag)
+                .replace(R.id.content, result_frag, "result")
                 .addToBackStack(null)
                 .commit();
+
 
     }
 
@@ -136,8 +152,23 @@ public class MainActivity extends AppCompatActivity implements
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }else if(getSupportFragmentManager().getBackStackEntryCount() == 1){
+            finish();
+        }else if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && !contactAlive){
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, firstFrag, "home")
+                    .addToBackStack(null)
+                    .commit();
+        }else if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && contactAlive){
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, c_frag, "contact")
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else {
+           super.onBackPressed();
         }
     }
 

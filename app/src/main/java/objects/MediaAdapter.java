@@ -1,10 +1,12 @@
 package objects;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.ClipboardManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
 
     @Override
     public void onBindViewHolder(MediaHolder mHolder, int i){
-        Media_Info m = mList.get(i);
+        final Media_Info m = mList.get(i);
 
         final Intent a;
         final Context c;
@@ -63,7 +65,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaHolder>
         mHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c.startActivity(a);
+                if(!m.returnType().equals("Name")){
+                    c.startActivity(a);
+                }
+                android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)c.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("text",m.getUrl());
+                clipboardManager.setPrimaryClip(clip);
             }
         });
 
