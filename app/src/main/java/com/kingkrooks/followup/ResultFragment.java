@@ -105,6 +105,7 @@ public class ResultFragment extends Fragment {
                     }catch (Exception e){
                         e.printStackTrace();
                         Log.i("tag", e.toString());
+                        Log.i("tag", "File was not written");
                     }
 
                 }
