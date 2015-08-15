@@ -1,6 +1,7 @@
 package com.kingkrooks.followup;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -38,6 +39,7 @@ public class ResultFragment extends Fragment {
 
     private String result = "No result yet hamie";
     private View view;
+    private int counter = 1;
     private FloatingActionButton fab;
 
 
@@ -62,56 +64,63 @@ public class ResultFragment extends Fragment {
 
 
         getActivity().setTitle(getResources().getString(R.string.results));
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         fab = (FloatingActionButton)view.findViewById(R.id.saveButton);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Connext");
-                directory.mkdirs();
-                File file = new File(directory, "contacts.txt");
-                if(!file.exists()){
-                    Log.i("tag", "File is being created, holmes");
-                    try{
-                        Toast.makeText(getActivity().getApplicationContext(), "File written", Toast.LENGTH_SHORT)
-                                .show();
-                        ArrayList<String> list = new ArrayList<String>();
-                        list.add(result);
-                        FileOutputStream fos = new FileOutputStream(file);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(list);
-                        oos.close();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                if(counter == 0){
+                    File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Connext");
+                    directory.mkdirs();
+                    File file = new File(directory, "contacts.txt");
+                    if(!file.exists()){
+                        Log.i("tag", "File is being created, holmes");
+                        try{
+                            Toast.makeText(getActivity().getApplicationContext(), "File written", Toast.LENGTH_SHORT)
+                                    .show();
+                            ArrayList<String> list = new ArrayList<String>();
+                            list.add(result);
+                            FileOutputStream fos = new FileOutputStream(file);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(list);
+                            oos.close();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }else{
+                        Log.i("tag", "File has been created, reading the results");
+                        try{
+                            FileInputStream fis = new FileInputStream(file);
+                            ObjectInputStream ois = new ObjectInputStream(fis);
+                            ArrayList<String> list = (ArrayList<String>)ois.readObject();
+                            list.add(result);
+                            ois.close();
+
+
+
+                            FileOutputStream fos = new FileOutputStream(file);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(list);
+                            oos.close();
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+
+                        }
+
                     }
 
+                    Snackbar.make(view, "Contact Saved for Later", Snackbar.LENGTH_SHORT)
+                            .show();
+                    counter++;
                 }else{
-                    Log.i("tag", "File has been created, reading the results");
-                    try{
-                        FileInputStream fis = new FileInputStream(file);
-                        ObjectInputStream ois = new ObjectInputStream(fis);
-                        ArrayList<String> list = (ArrayList<String>)ois.readObject();
-                        list.add(result);
-                        ois.close();
-
-
-
-                        FileOutputStream fos = new FileOutputStream(file);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(list);
-                        oos.close();
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        Log.i("tag", e.toString());
-                        Log.i("tag", "File was not written");
-                    }
-
+                    Snackbar.make(view, "Contact Already Saved", Snackbar.LENGTH_SHORT)
+                            .show();
                 }
 
-                Snackbar.make(view, "File Saved", Snackbar.LENGTH_SHORT)
-                        .show();
             }
         });
 
@@ -161,6 +170,18 @@ public class ResultFragment extends Fragment {
 
         return list;
 
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        counter = 0;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        counter = 0;
     }
 
 
