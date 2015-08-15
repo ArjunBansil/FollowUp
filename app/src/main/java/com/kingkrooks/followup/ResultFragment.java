@@ -104,6 +104,7 @@ public class ResultFragment extends Fragment {
 
                     }catch (Exception e){
                         e.printStackTrace();
+                        Log.i("tag", e.toString());
                     }
 
                 }
