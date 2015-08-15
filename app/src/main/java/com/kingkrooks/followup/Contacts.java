@@ -1,6 +1,7 @@
 package com.kingkrooks.followup;
 
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
@@ -46,6 +47,7 @@ public class Contacts extends Fragment {
         view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         getActivity().setTitle("Saved Contacts");
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         RecyclerView recList = (RecyclerView)view.findViewById(R.id.contactList);
         recList.setHasFixedSize(true);

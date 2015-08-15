@@ -4,6 +4,7 @@ package com.kingkrooks.followup;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -76,6 +77,8 @@ public class fragment_two extends Fragment {
         view = inflater.inflate(R.layout.fragment_fragment_two, container, false);
 
         getActivity().setTitle(getResources().getString(R.string.add_info));
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
 
         twitterLoginButton = (TwitterLoginButton)view.findViewById(R.id.twitter_login);
