@@ -175,6 +175,7 @@ public class ResultFragment extends Fragment {
     @Override
     public void onDetach(){
         super.onDetach();
+        getActivity().getFragmentManager().beginTransaction().remove(this);
         counter = 0;
     }
 

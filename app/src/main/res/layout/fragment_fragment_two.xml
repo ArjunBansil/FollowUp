@@ -8,27 +8,33 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="750dp"
             android:id="@+id/signInRel">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="300dp"
                 android:id="@+id/nameCarrier"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="62dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/til">
+                android:layout_centerHorizontal="true">
 
                 <EditText
                     android:layout_width="225dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/name"
-                    android:id="@+id/nameEntry"/>
+                    android:id="@+id/nameEntry"
+                    android:layout_alignTop="@+id/addName"
+                    android:layout_alignStart="@+id/nameCarrier" />
+
             </android.support.design.widget.TextInputLayout>
+
+
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/addName"
@@ -40,9 +46,9 @@
                 app:pressedTranslationZ="12dp"
                 android:clickable="true"
                 android:layout_alignTop="@+id/nameCarrier"
-                android:layout_toEndOf="@+id/login_button"
-                android:layout_marginTop="10dp" />
-
+                android:layout_alignEnd="@+id/nameCarrier"
+                android:layout_marginTop="-15dp" />
+<!--
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
@@ -50,14 +56,14 @@
                 android:layout_marginTop="127dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
-
+-->
             <com.twitter.sdk.android.core.identity.TwitterLoginButton
                 android:id="@+id/twitter_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="67dp"
-                android:layout_below="@+id/login_button"
-                android:layout_centerHorizontal="true" />
+                android:layout_below="@+id/addName"
+                android:layout_alignStart="@+id/til"
+                android:layout_marginTop="28dp" />
 
 
             <android.support.design.widget.TextInputLayout
@@ -84,9 +90,9 @@
                 app:elevation="6dp"
                 app:pressedTranslationZ="12dp"
                 android:clickable="true"
-                android:layout_alignTop="@+id/til"
-                android:layout_toEndOf="@+id/login_button"
-                android:layout_marginTop="10dp" />
+                android:layout_above="@+id/emailCarrier"
+                android:layout_alignEnd="@+id/til"
+                android:layout_marginBottom="-17dp" />
 
 
             <android.support.design.widget.TextInputLayout
@@ -113,14 +119,9 @@
                 android:src="@mipmap/ic_email"
                 android:layout_gravity="bottom|end"
                 android:clickable="true"
-                android:layout_below="@+id/addPhone"
-                android:layout_alignTop="@+id/emailCarrier"
-                android:layout_toEndOf="@+id/login_button"
-                android:layout_marginTop="10dp"
-
-
-
-                />
+                android:layout_alignBottom="@+id/emailCarrier"
+                android:layout_alignStart="@+id/addPhone"
+                android:layout_marginBottom="-17dp" />
 
 
         </RelativeLayout>

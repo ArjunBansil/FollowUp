@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -40,6 +41,7 @@ public class MainActivityFragment extends Fragment {
     private View view;
     private ImageView img;
     private FloatingActionButton fab;
+    private Button login;
     private TextView txt;
     private static final int PIX_HEIGHT_WIDTH = 350;
 
@@ -49,10 +51,12 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState){
         view = inflater.inflate(R.layout.fragment_first, container, false);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        final MainActivity activity = (MainActivity)getActivity();
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         db = new DatabaseHandler(getActivity().getApplicationContext());
         img= (ImageView)view.findViewById(R.id.imageView);
+        login = (Button)view.findViewById(R.id.goToLogin);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
         txt = (TextView)view.findViewById(R.id.textView);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +80,7 @@ public class MainActivityFragment extends Fragment {
 
         if(row){
             img.setVisibility(View.VISIBLE);
+            login.setVisibility(View.GONE);
             List<Media_Container> mList = db.getAllMedia();
             List<Media_Container> fList = new ArrayList<Media_Container>();
 
@@ -103,6 +108,13 @@ public class MainActivityFragment extends Fragment {
 
         }else{
             img.setVisibility(View.INVISIBLE);
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.initial = true;
+                    activity.goToLogin();
+                }
+            });
 
 
         }
