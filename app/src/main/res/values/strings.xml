@@ -10,6 +10,7 @@
     <string name="item_3">Saved Contacts</string>
     <string name="open">Open Navigation Drawer</string>
     <string name="close">Close Navigation Drawer</string>
+    <string name="goToLogin">Go to the Login Page</string>
     <string name="explanation">This is the QR Code that Other People Need to Scan</string>
     <string name="not_there">Navigate to the Sign-In Page to Generate QR Code</string>
     <string name="expo">You can save contact information to use it later by clicking the save button on the bottom right corner once you have scanned it and use the Saved Contacts page to use it</string>

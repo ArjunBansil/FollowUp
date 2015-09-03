@@ -1,6 +1,5 @@
 package com.kingkrooks.followup;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
@@ -23,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     private boolean contactAlive = false;
+    public boolean initial = false;
 
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (itemId){
             case R.id.drawer_item_1:
                 contactAlive = false;
+                initial = false;
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content, firstFrag, "home")
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.drawer_item_2:
                 contactAlive = false;
+                initial = false;
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content, sec_frag, "info")
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.drawer_item_3:
                 contactAlive = true;
+                initial = false;
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content, c_frag, "contact")
@@ -104,6 +107,14 @@ public class MainActivity extends AppCompatActivity implements
                 break;
 
         }
+    }
+
+    public void goToLogin(){
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, sec_frag, "info")
+                .addToBackStack(null)
+                .commit();
     }
 
     public void useResult(String r){
@@ -152,20 +163,33 @@ public class MainActivity extends AppCompatActivity implements
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        }else if(getSupportFragmentManager().getBackStackEntryCount() == 1){
-            finish();
-        }else if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && !contactAlive){
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content, firstFrag, "home")
-                    .addToBackStack(null)
-                    .commit();
-        }else if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && contactAlive){
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content, c_frag, "contact")
-                    .addToBackStack(null)
-                    .commit();
+        }
+        else if(getFragmentManager().findFragmentByTag("result") != null){
+            if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && !contactAlive){
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, firstFrag, "home")
+                        .addToBackStack(null)
+                        .commit();
+            } else if(getFragmentManager().findFragmentByTag("result").equals(result_frag) && contactAlive){
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, c_frag, "contact")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+        else if(getFragmentManager().findFragmentByTag("info") != null){
+            if(getFragmentManager().findFragmentByTag("info").equals(sec_frag) && initial){
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content, firstFrag, "home")
+                        .addToBackStack(null)
+                        .commit();
+                initial = false;
+            } else if(getFragmentManager().findFragmentByTag("info").equals(sec_frag) && !initial){
+                super.onBackPressed();
+            }
         }
         else {
            super.onBackPressed();

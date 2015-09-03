@@ -82,9 +82,9 @@ public class fragment_two extends Fragment {
 
 
         twitterLoginButton = (TwitterLoginButton)view.findViewById(R.id.twitter_login);
-        loginButton = (LoginButton)view.findViewById(R.id.login_button);
+        //loginButton = (LoginButton)view.findViewById(R.id.login_button);
         callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, mCallBack);
+//        loginButton.registerCallback(callbackManager, mCallBack);
         db = new DatabaseHandler(getActivity().getApplicationContext());
         b = (FloatingActionButton)view.findViewById(R.id.addPhone);
         b2 = (FloatingActionButton)view.findViewById(R.id.addEmail);
@@ -187,6 +187,12 @@ public class fragment_two extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        getActivity().getFragmentManager().beginTransaction().remove(this);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
