@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,15 +55,21 @@ public class Contacts extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
-        if(getList().isEmpty()){
+        if(getList() != null){
+            if(getList().isEmpty()){
+                txt = (TextView)view.findViewById(R.id.empty);
+                txt.setVisibility(View.VISIBLE);
+                txt.setText("No Contact Info Saved! Start Scanning!");
+            }else{
+                ContactAdapter ca = new ContactAdapter(getList());
+                recList.setAdapter(ca);
+            }
+        }else{
             txt = (TextView)view.findViewById(R.id.empty);
             txt.setVisibility(View.VISIBLE);
             txt.setText("No Contact Info Saved! Start Scanning!");
-        }else{
-            ContactAdapter ca = new ContactAdapter(getList());
-            recList.setAdapter(ca);
         }
+
 
 
 
@@ -73,6 +80,7 @@ public class Contacts extends Fragment {
     private ArrayList<String> getList(){
         ArrayList<String> list = null;
         try{
+            Log.i("tag", "File is there, holmes");
             File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Connext");
             File file = new File(directory, "contacts.txt");
             FileInputStream fis = new FileInputStream(file);
@@ -80,7 +88,8 @@ public class Contacts extends Fragment {
             list = (ArrayList<String>)ois.readObject();
             ois.close();
         }catch (Exception e){
-            e.printStackTrace();
+            Log.i("tag", "File ain't there, holmes");
+            list = null;
         }
 
         return list;
