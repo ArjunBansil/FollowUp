@@ -21,10 +21,10 @@ android {
 
     defaultConfig {
         applicationId "com.kingkrooks.followup"
-        minSdkVersion 19
+        minSdkVersion 18
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1.1"
     }
     buildTypes {
         release {
